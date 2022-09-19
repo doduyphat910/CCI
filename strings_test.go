@@ -20,6 +20,11 @@ func TestIsUnique(t *testing.T) {
 		},
 		{
 			name: "not unique",
+			arg:  "test",
+			want: false,
+		},
+		{
+			name: "not unique",
 			arg:  "",
 			want: true,
 		},
@@ -183,5 +188,138 @@ func TestIsPalindrome(t *testing.T) {
 		if result != testCase.want {
 			t.Errorf("fail. want=%v, result=%v", testCase.want, result)
 		}
+	}
+}
+
+func TestIsEdit(t *testing.T) {
+	type args struct {
+		s1 string
+		s2 string
+	}
+	testCases := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "1 remove",
+			args: args{
+				s1: "pale",
+				s2: "ple",
+			},
+			want: true,
+		},
+		{
+			name: "1 insert",
+			args: args{
+				s1: "pales",
+				s2: "pale",
+			},
+			want: true,
+		},
+		{
+			name: "1 edit",
+			args: args{
+				s1: "pale",
+				s2: "bale",
+			},
+			want: true,
+		},
+		{
+			name: "2 edit",
+			args: args{
+				s1: "pale",
+				s2: "bake",
+			},
+			want: false,
+		},
+	}
+
+	for _, testCase := range testCases {
+		t.Run(testCase.name, func(t *testing.T) {
+			result := isEdit(testCase.args.s1, testCase.args.s2)
+			if result != testCase.want {
+				t.Errorf("fail. want=%v, result=%v", testCase.want, result)
+			}
+		})
+	}
+}
+
+func TestCompress(t *testing.T) {
+	testCases := []struct {
+		name      string
+		originalS string
+		want      string
+	}{
+		{
+			name:      "Example",
+			originalS: "aabcccccaaa",
+			want:      "a2b1c5a3",
+		},
+		{
+			name:      "Example",
+			originalS: "aabccccca",
+			want:      "a2b1c5a1",
+		},
+		{
+			name:      "Example",
+			originalS: "aabccccc",
+			want:      "a2b1c5",
+		},
+	}
+
+	for _, testCase := range testCases {
+		t.Run(testCase.name, func(t *testing.T) {
+			result := compress(testCase.originalS)
+			if result != testCase.want {
+				t.Errorf("fail. want=%v, result=%v", testCase.want, result)
+			}
+		})
+	}
+}
+
+func TestStringRotation(t *testing.T) {
+	type args struct {
+		s1 string
+		s2 string
+	}
+	testCases := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "ex1",
+			args: args{
+				s1: "waterbottle",
+				s2: "erbottlewat",
+			},
+			want: true,
+		},
+		{
+			name: "ex2",
+			args: args{
+				s1: "waterbottle",
+				s2: "erbottlawat",
+			},
+			want: false,
+		},
+		{
+			name: "ex2",
+			args: args{
+				s1: "waterbottleee",
+				s2: "erbottlawat",
+			},
+			want: false,
+		},
+	}
+
+	for _, testCase := range testCases {
+		t.Run(testCase.name, func(t *testing.T) {
+			result := isSubString(testCase.args.s1, testCase.args.s2)
+			if result != testCase.want {
+				t.Errorf("fail. want=%v, result=%v", testCase.want, result)
+			}
+		})
 	}
 }
