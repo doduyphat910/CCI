@@ -1,5 +1,6 @@
 package main
 
 func main() {
-	isUnique("ssss")
+	// isUnique("ssss")
+	// test123()
 }
